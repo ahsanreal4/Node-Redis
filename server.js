@@ -1,12 +1,23 @@
-const express = require('express');
-const client = require('./config/redis');
-const cors = require('cors');
+const express = require("express");
+const { initClient } = require("./config/redis");
+const connectDatabase = require("./config/database");
+const cors = require("cors");
 
-const PORT = 8000;
+// Connect Redis
+const client = initClient();
 
+// Connect Database
+connectDatabase();
+
+// Connect Express
 const app = express();
+
+// Express Configurations
 app.use(cors());
 
-app.use('/api', require('./routes/api'));
+// Routes
+app.use("/api", require("./routes/api"));
 
+// Listen server
+const PORT = 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
