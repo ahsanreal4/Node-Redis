@@ -1,6 +1,7 @@
 const express = require("express");
 const { initClient } = require("./config/redis");
 const connectDatabase = require("./config/database");
+require("dotenv").config();
 const cors = require("cors");
 
 // Connect Redis
@@ -18,6 +19,6 @@ app.use(cors());
 // Routes
 app.use("/api", require("./routes/api"));
 
-// Listen server
-const PORT = 8000;
+// Listen server on specified port
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
