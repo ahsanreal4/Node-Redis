@@ -17,5 +17,5 @@ app.use(cors());
 app.use("/api", require("./routes/api"));
 
 // Listen server on specified port
-const PORT = process.env.PORT;
+const PORT = process.env.PORT | 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
