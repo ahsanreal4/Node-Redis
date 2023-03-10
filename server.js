@@ -1,11 +1,8 @@
 const express = require("express");
-const { initClient } = require("./config/redis");
-const connectDatabase = require("./config/database");
+require("./common/config/redis.config");
+const connectDatabase = require("./common/config/database.config");
 require("dotenv").config();
 const cors = require("cors");
-
-// Connect Redis
-const client = initClient();
 
 // Connect Database
 connectDatabase();
