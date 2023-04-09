@@ -5,11 +5,19 @@ async function getRedisValue(key, type = "string") {
     console.log("Key was not provided to getRedisValue() function");
     return;
   }
-  if (type.toLocaleLowerCase() === "json") {
-    const jsonKey = await client.get(key);
-    return JSON.parse(jsonKey);
+
+  switch (type.toLowerCase()) {
+    case "json":
+      const jsonKey = await client.get(key);
+      return JSON.parse(jsonKey);
+    case "string":
+      return await client.get(key);
+    case "number":
+      const key = await client.get(key);
+      return parseInt(jsonKey);
+    default:
+      return;
   }
-  return await client.get(key);
 }
 
 function setRedisKey(key, value, type = "string") {
@@ -18,12 +26,9 @@ function setRedisKey(key, value, type = "string") {
     return;
   }
 
-  if (type.toLocaleLowerCase() === "json") {
-    client.set(key, JSON.stringify(value));
-    return;
-  }
-
-  client.set(key, value);
+  type.toLocaleLowerCase() === "json"
+    ? client.set(key, JSON.stringify(value))
+    : client.set(key, value);
 }
 
 module.exports = { getRedisValue, setRedisKey };
